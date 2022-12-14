@@ -1,6 +1,5 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useState } from "react";
 import { useEffect } from 'react'
 import io from 'socket.io-client'
@@ -15,10 +14,10 @@ const Home: NextPage = () => {
 
     socket.on('connect', () => {
       console.log('connected')
-    })
-
-    socket.on('update-click', (clicks: number) => {
-      setClicks(clicks)
+      socket.on('update-click', (clicks: number) => {
+        console.log(clicks);
+        setClicks(clicks)
+      })
     })
   }
 
@@ -32,10 +31,6 @@ const Home: NextPage = () => {
     countInitializer()
   }, [])
 
-  function click() {
-    socket.emit('click')
-  }
-
   return (
     <>
       <Head>
@@ -44,7 +39,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen items-center justify-center">
-        <button onClick={(() => click())} className="px-2 py-1 border border-gray-400 bg-gray-200 rounded-md">{clicks}</button>
+        <button onClick={(() => {
+          socket.emit('click')
+        })} className="px-2 py-1 border border-gray-400 bg-gray-200 rounded-md">{clicks}</button>
       </main>
     </>
   );
