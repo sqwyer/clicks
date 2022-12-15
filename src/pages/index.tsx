@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import { useEffect } from 'react'
-import io from 'socket.io-client'
+import io from 'socket.io-client/dist/socket.io'
 let socket: any;
 
 const Home: NextPage = () => {
